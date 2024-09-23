@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbuh06o03i4fj"]
+
+[ext_resource type="FontFile" uid="uid://djl83rtt3uxx6" path="res://dodge_the_creeps_2d_assets/fonts/Xolonium-Regular.ttf" id="1_e7oyr"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="StartButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("1_e7oyr")
+theme_override_font_sizes/font_size = 64
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 713.0
+offset_top = -1.0
+offset_right = 849.0
+offset_bottom = 77.0
+theme_override_fonts/font = ExtResource("1_e7oyr")
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="Message" type="Label" parent="."]
+offset_left = 471.0
+offset_top = 146.0
+offset_right = 1106.0
+offset_bottom = 305.0
+theme_override_fonts/font = ExtResource("1_e7oyr")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the creeps !"
+
+[node name="MessageTimer" type="Timer" parent="."]

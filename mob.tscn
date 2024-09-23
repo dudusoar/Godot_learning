@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://k8r1wxsw22ot"]
+
+[ext_resource type="Texture2D" uid="uid://dkkaw4rpk17y1" path="res://dodge_the_creeps_2d_assets/art/enemyFlyingAlt_1.png" id="2_8f2ic"]
+[ext_resource type="Texture2D" uid="uid://droli468i3mtp" path="res://dodge_the_creeps_2d_assets/art/enemyFlyingAlt_2.png" id="3_bqn1o"]
+[ext_resource type="Texture2D" uid="uid://c5drtt1y6flci" path="res://dodge_the_creeps_2d_assets/art/enemySwimming_1.png" id="4_sex1w"]
+[ext_resource type="Texture2D" uid="uid://cdrrt5u0buhtu" path="res://dodge_the_creeps_2d_assets/art/enemySwimming_2.png" id="5_w2ji0"]
+[ext_resource type="Texture2D" uid="uid://nexqywohukbd" path="res://dodge_the_creeps_2d_assets/art/enemyWalking_1.png" id="6_uxj7f"]
+[ext_resource type="Texture2D" uid="uid://skslybxxohht" path="res://dodge_the_creeps_2d_assets/art/enemyWalking_2.png" id="7_aj5w6"]
+
+[sub_resource type="GDScript" id="GDScript_4a3y8"]
+script/source = "extends RigidBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var mob_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
+	$AnimatedSprite2D.play(mob_types[randi() % mob_types.size()])
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	queue_free()
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rnhf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8f2ic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bqn1o")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_sex1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_w2ji0")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_uxj7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_aj5w6")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ab0li"]
+radius = 35.0
+height = 82.0
+
+[node name="Mob" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+script = SubResource("GDScript_4a3y8")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_1rnhf")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ab0li")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
