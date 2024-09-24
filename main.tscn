@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://wgp1mm1gep28"]
+[gd_scene load_steps=7 format=3 uid="uid://wgp1mm1gep28"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_14ww1"]
 [ext_resource type="PackedScene" uid="uid://k8r1wxsw22ot" path="res://mob.tscn" id="2_o1yps"]
 [ext_resource type="PackedScene" uid="uid://cpxdgwctre57i" path="res://player.tscn" id="3_ppx0o"]
+[ext_resource type="PackedScene" uid="uid://dbuh06o03i4fj" path="res://hud.tscn" id="4_4qha2"]
 
 [sub_resource type="Curve2D" id="Curve2D_5t8bq"]
 _data = {
@@ -19,6 +20,14 @@ var score"
 [node name="Main" type="Node"]
 script = ExtResource("1_14ww1")
 mob_scene = ExtResource("2_o1yps")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.478431, 1, 1)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -42,7 +51,10 @@ rotation = -0.00441012
 
 [node name="Player" parent="." instance=ExtResource("3_ppx0o")]
 
+[node name="HUD" parent="." instance=ExtResource("4_4qha2")]
+
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
